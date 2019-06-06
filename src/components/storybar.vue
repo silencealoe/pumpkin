@@ -20,6 +20,7 @@
        span{
            display:inline-block;
            height: 45px;
+           font-size: 16px;
 
        }
        span.select{

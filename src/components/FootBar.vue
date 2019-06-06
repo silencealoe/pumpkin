@@ -1,6 +1,6 @@
 <template>
   <div id="footerbar">
-      <ul>
+      <ul v-show="$store.state.footerShow">
         <router-link to="/story" tag="li" activeClass="active" ><Icon type="md-book" size="20" /><span>故事</span></router-link>
         <router-link to="/theme" tag="li" activeClass="active" ><Icon type="ios-star-outline" size="20"/><span>主题</span></router-link>
       </ul>
@@ -27,12 +27,13 @@ export default {
 
  }
  ul li{
-    height: 45px;
+    height:45px;
     width:50%;
     text-align: center;
   
     span{
         display: block;
+        font-size: 16px;
     }
 
  }

@@ -24,8 +24,7 @@
           <Icon type="ios-arrow-down" size="40" color="#ccc"></Icon>
         </p>
         <p class="up">
-
-        <Icon type="ios-arrow-down" size="40" color="#ea6f5a"></Icon>
+          <Icon type="ios-arrow-down" size="40" color="#ea6f5a"></Icon>
         </p>
       </div>
       <div class="praise_people_wrap">
@@ -87,16 +86,16 @@ export default {
       story_count: 0,
       userdata: [],
       comments: [],
-      isOpen:false
+      isOpen: false
     };
   },
   methods: {
-    handleClose(){
-      this.isOpen=true
-
+    handleClose() {
+      this.isOpen = true;
     }
   },
   mounted() {
+    this.$store.commit("changeShow", false);
     console.log(this.$route.query);
     axios({
       url: `/api/story/detail?story_id=${this.$route.query.storyid}&from_id=2`
@@ -159,6 +158,9 @@ export default {
       console.log(arr);
       console.log(JSON.parse(arr).img_url);
     });
+  },
+  beforeDestroy() {
+    this.$store.commit("changeShow", true);
   }
 };
 </script>

@@ -1,112 +1,131 @@
 <template>
   <div id="recommend">
     <!-- <div class="infinite-list-wrapper"> -->
-      <ul
-        class="list"
-        v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="disable"
-        infinite-scroll-distance="0"
-        infinite-scroll-immediate-check="false"
+    <ul
+      class="list"
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="disable"
+      infinite-scroll-distance="0"
+      infinite-scroll-immediate-check="false"
+    >
+      <li
+        v-for="data in recommendlist"
+        class="list-item"
+        @click="handleclick(data.id,data.topic.id)"
       >
-        <li v-for="data in recommendlist" class="list-item" @click="handleclick(data.id,data.topic.id)" :key="data.id">
-          <div class="recommend-title">
-            <span class="special-tag exclusive" v-show="data.exclusive?!isExclusive:isExclusive">独家</span>
-            <span class="special-tag" v-show="data.hot?!isHot:isHot">热门</span>
-            {{data.info_flow_title}}
+        <div class="recommend-title">
+          <span class="special-tag exclusive" v-show="data.exclusive?!isExclusive:isExclusive">独家</span>
+          <span class="special-tag" v-show="data.hot?!isHot:isHot">热门</span>
+          {{data.info_flow_title}}
+        </div>
+        <div class="recommend-img">
+          <img :src="data.default_image" alt>
+        </div>
+        <div class="recommend-userinfo clear">
+          <div class="avator-name-other fl">
+            <img :src="data.user.avatar" alt>
+            <span>{{data.user.name}}</span>
           </div>
-          <div class="recommend-img">
-            <img :src="data.default_image" alt>
+          <div class="read-like fr">
+            <span>{{data.view_count}}</span>人阅读
+            .
+            <span>{{data.praise_count}}</span>人喜欢
           </div>
-          <div class="recommend-userinfo clear">
-            <div class="avator-name-other fl">
-              <img :src="data.user.avatar" alt>
-              <span>{{data.user.name}}</span>
-            </div>
-            <div class="read-like fr">
-              <span>{{data.view_count}}</span>人阅读
-              .
-              <span>{{data.praise_count}}</span>人喜欢
-            </div>
-          </div>
-        </li>
-      </ul>
-      <p v-if="disable" class="loading">加载中...</p>
-      <p v-if="nomore">没有更多了</p>
-      <BackTop :bottom="50" :right="20"></BackTop>
+        </div>
+      </li>
+    </ul>
+    <p v-if="disable" class="loading">加载中...</p>
+    <p v-if="nomore">没有更多了</p>
+    <BackTop :bottom="70" :right="20"></BackTop>
+    <ShowUpdate :msg="mymsg" :showUp="myshowUP"></ShowUpdate>
 
     <!-- </div> -->
   </div>
 </template>
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import infiniteScroll from 'vue-infinite-scroll'
-Vue.use(infiniteScroll)
+import axios from "axios";
+import Vue from "vue";
+import infiniteScroll from "vue-infinite-scroll";
+import ShowUpdate from "../../../components/ShowUpdate";
+Vue.use(infiniteScroll);
 export default {
-  data () {
+  data() {
     return {
       recommendlist: [],
       isHot: false,
       isExclusive: false,
-      disable: false,
+      disable: true,
       page_index: 1,
       total: 0,
-      nomore: false
-    }
+      nomore: false,
+      mymsg: "更新了10条数据",
+      myshowUP: false,
+      setIntervalid: null
+    };
+  },
+  components: {
+    ShowUpdate
   },
   methods: {
-    handleclick (storyid, topicid) {
-      console.log(storyid, topicid)
+    handleclick(storyid, topicid) {
+      console.log(storyid, topicid);
       this.$router.push({
-        path: '/detail',
+        path: "/detail",
         query: {
           storyid,
           topicid
         }
-      })
-      // this.$router.push({
-      //   name:'detail',
-      //   params:{
-      //     storyid,
-      //     topicid
-
-      //   }
-      // })
+      });
     },
-    loadMore () {
-      console.log('aaaa')
-      this.disable = true
-      this.page_index++
+    setShow() {
+      console.log("aaa");
+      this.setIntervalid = setInterval(() => {
+        this.myshowUP = false;
+      }, 2000);
+    },
+    loadMore() {
+      console.log("aaaa");
+      this.disable = true;
+      this.page_index++;
       if (this.recommendlist.length === this.total) {
-        this.nore = true
-        return
+        this.nore = true;
+        return;
       }
       axios({
         url: `api/recommend/storyList?per_page=10&page=${
           this.page_index
         }&user_id=50eaa6d8b4a5604e24bd659530521cc6&session_id=50eaa6d8b4a5604e24bd659530521cc6&action=1`
       }).then(res => {
-        this.recommendlist = [...this.recommendlist, ...res.data.data.data]
-        console.log(this.recommendlist)
-        this.disable = false
-      })
+        this.recommendlist = [...this.recommendlist, ...res.data.data.data];
+        console.log(this.recommendlist);
+        this.disable = false;
+      });
     }
   },
-  mounted () {
+  mounted() {
     axios({
       url:
-        'api/recommend/storyList?per_page=10&page=1&user_id=50eaa6d8b4a5604e24bd659530521cc6&session_id=50eaa6d8b4a5604e24bd659530521cc6&action=2'
+        "api/recommend/storyList?per_page=10&page=1&user_id=50eaa6d8b4a5604e24bd659530521cc6&session_id=50eaa6d8b4a5604e24bd659530521cc6&action=2"
     }).then(res => {
-      this.recommendlist = res.data.data.data
-      console.log(this.recommendlist)
-      this.total = parseInt(res.data.data.page_data.total)
-      console.log(this.total)
-    })
+      this.recommendlist = res.data.data.data;
+      console.log(this.recommendlist);
+      this.total = parseInt(res.data.data.page_data.total);
+      console.log(this.total);
+      this.disable = false;
+      console.log("sss");
+      this.myshowUP = true;
+    });
+  },
+  updated() {
+    this.setShow();
+  },
+  beforeDestroy() {
+    this.setIntervalid = null;
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-.list{
+.list {
   background: #f0f0f0;
   width: 100%;
   .list-item {
@@ -168,8 +187,8 @@ export default {
     }
   }
 }
-.loading{
-  height: 100px;
+.loading {
+  height:100px;
   background: #f0f0f0;
   text-align: center;
   font-size: 20px;
