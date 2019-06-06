@@ -1,23 +1,46 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Story from './views/story/story'
+import Theme from './views/theme'
+import Recommend from './views/story/recommend/recommend'
+import Newest from './views/story/newest/newest'
+import Detail from './views/detail'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'hash',
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path: '/story',
+      name: 'story',
+      component: Story,
+      children: [
+        {
+          path: 'recommend',
+          component: Recommend
+        }, {
+          path: 'newest',
+          component: Newest
+        }, {
+          path: '',
+          redirect: '/story/recommend'
+        }
+      ]
+    }, {
+      path: '/theme',
+      name: 'theme',
+      component: Theme
+
+    }, {
+      path: '/detail',
+      name: 'detail',
+      component: Detail
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '*',
+      redirect: '/story'
     }
+
   ]
 })

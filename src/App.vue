@@ -1,29 +1,44 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+     <FootBar></FootBar>
     <router-view/>
   </div>
 </template>
+<script>
+import FootBar from './components/FootBar'
+export default {
+  data () {
+    return {
+
+    }
+  },
+  components: {
+    FootBar
+  }
+
+}
+</script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+*{
+  padding:0;
+  margin:0;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body{
+  color: black !important;
+}
+ul li{
+  list-style: none;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clear:after{
+  display: block;
+  content:'';
+  clear:both;
 }
 </style>
