@@ -1,6 +1,7 @@
 <template>
   <div id="app">
      <FootBar></FootBar>
+     
     <router-view/>
   </div>
 </template>
@@ -23,6 +24,9 @@ export default {
 *{
   padding:0;
   margin:0;
+}
+#app{
+  padding:0 10px;
 }
 body{
   color: black !important;

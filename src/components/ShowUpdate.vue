@@ -9,7 +9,7 @@
 </template>
 <script>
 export default {
-    props:["msg","showUp"],
+    props:["msg","showUp"],    //父传子
   data() {
     return {
     
@@ -24,7 +24,7 @@ export default {
 </script>
 <style lang="scss">
 .showinfo {
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 100px;
 }

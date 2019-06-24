@@ -12,10 +12,11 @@
         v-for="data in recommendlist"
         class="list-item"
         @click="handleclick(data.id,data.topic.id)"
+        :key="data.id"
       >
         <div class="recommend-title">
-          <span class="special-tag exclusive" v-show="data.exclusive?!isExclusive:isExclusive">独家</span>
-          <span class="special-tag" v-show="data.hot?!isHot:isHot">热门</span>
+          <Exclusive v-show="data.exclusive">独家</Exclusive>
+          <Heat class="special-tag" v-show="data.hot">热门</Heat>
           {{data.info_flow_title}}
         </div>
         <div class="recommend-img">
@@ -46,7 +47,9 @@
 import axios from "axios";
 import Vue from "vue";
 import infiniteScroll from "vue-infinite-scroll";
-import ShowUpdate from "../../../components/ShowUpdate";
+import ShowUpdate from "@/components/ShowUpdate";
+import Exclusive from '@/components/Exclusive'
+import Heat from '@/components/Heat'
 Vue.use(infiniteScroll);
 export default {
   data() {
@@ -64,7 +67,9 @@ export default {
     };
   },
   components: {
-    ShowUpdate
+    ShowUpdate,
+    Exclusive,
+    Heat
   },
   methods: {
     handleclick(storyid, topicid) {
@@ -136,21 +141,6 @@ export default {
       font-weight: normal;
       font-size: 20px;
       margin-bottom: 10px;
-      .special-tag {
-        width: 33px;
-        height: 20px;
-        display: inline-block;
-        font-size: 12px;
-        text-align: center;
-        line-height: 20px;
-        background: orange;
-        border-radius: 20px;
-        color: white;
-      }
-      .exclusive {
-        background: #f7644a;
-        margin-right: 6px;
-      }
     }
     .recommend-img {
       min-height: 190px;

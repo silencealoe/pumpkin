@@ -2,15 +2,15 @@
   <div id="themebar">
     <div class="themebarlist">
       <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide themelist active" @click="handleClick()">
-            <span>推荐</span>
+        <div class="swiper-wrapper" ref="themeSwiper">
+          <div class="swiper-slide themelist" @click="handleClicknew()">
+            <span :class="click?'active':''" v-text="'推荐'" v-show="isShow"></span>
           </div>
-          <div :class="clicked?'swiper-slide themelist  active':'swiper-slide themelist'" @click="handleClick()">
-            <span>最新</span>
+          <div :class="['swiper-slide themelist']" @click="handleClick()">
+            <span :class="click2?'active':''" v-text="'最新'" v-show="isShow"></span>
           </div>
-          <div class="swiper-slide themelist" v-for="item in titltlist" @click="handleClick()">
-            <span>{{item.name}}</span>
+          <div :class="['swiper-slide themelist']" v-for="(item,index) in titltlist" @click="handleClickindex(item.id,index)" :key="item.id">
+            <span :class="currentClass===index?'active':''" v-text="item.name"></span>
           </div>
         </div>
       </div>
@@ -25,13 +25,33 @@ export default {
   data() {
     return {
       titltlist: [],
-      clicked:false
+      click:true, 
+      click2:false,
+      currentClass:-1,
+      isShow:false
     };
   },
-  methods:{
-      handleClick(){
-          this.clicked=true;
-      }
+  methods: {
+    handleClicknew(){
+      this.click=true  //点击推荐
+      this.click2=false
+      this.currentClass=-1
+      this.$emit('formRecommend',{click:this.click})
+
+    },
+    handleClick(){
+      this.click2=true; //点击最新
+      this.click=false;
+      this.currentClass=-1;
+      this.$emit('formNewest',{url:'api/topic/list?order=desc&per_page=20&from_id=2&sortby=add_time&page=1',click2:this.click2})
+
+    },
+    handleClickindex(id,index) {
+      this.click=false;
+      this.click2=false;
+      this.currentClass=index;
+      this.$emit('formList',{id:id})
+    }
   },
   mounted() {
     axios({
@@ -39,34 +59,54 @@ export default {
     }).then(res => {
       console.log(res.data.data.tag);
       this.titltlist = res.data.data.tag;
-
       this.$nextTick(() => {
+        this.isShow=true;
         var swiper = new Swiper(".swiper-container", {
           slidesPerView: 6,
-          spaceBetween: 0
+          spaceBetween: 0,
+          allowSlidePrev:false
         });
+        window.onmousemove=function(){
+          // console.log(swiper.getTranslate())
+          if(swiper.getTranslate()<0){
+            swiper.allowSlidePrev=true
+          }
+          if(swiper.getTranslate()===0){
+            swiper.allowSlidePrev=false
+
+          }
+        }
       });
     });
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+
 .themebarlist {
-    width:100%;
+  width: 100%;
+
+
+  .swiper-container {
+  }
 
   .themelist {
-    min-width: 30px;
+    // min-width:30px;
     height: 30px;
     line-height: 30px;
-    padding-right: 5px;
-    text-align: center;
+    // margin-right: 5px;
+    // text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
     span {
       font-size: 15px;
+      display:inline-block;
+      height: 30px;
     }
   }
-  .active{
-      color:#f7644a;
-      border-bottom:2px solid #f7644a;
+  .active {
+    color: #f7644a;
+    border-bottom: 2px solid #f7644a;
   }
 }
 </style>
