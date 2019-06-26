@@ -63,20 +63,20 @@ export default {
         this.isShow=true;
         var swiper = new Swiper(".swiper-container", {
           slidesPerView: 6,
-          spaceBetween: 0,
-          allowSlidePrev:false
+          spaceBetween: 0
+          // allowSlidePrev:false
         });
-        window.onmousemove=function(){
-          // console.log(swiper.getTranslate())
-          if(swiper.getTranslate()<0){
-            swiper.allowSlidePrev=true
-          }
-          if(swiper.getTranslate()===0){
-            swiper.allowSlidePrev=false
+        // window.onmousemove=function(){
+        //   // console.log(swiper.getTranslate())
+        //   if(swiper.getTranslate()<0){
+        //     swiper.allowSlidePrev=true
+        //   }
+        //   if(swiper.getTranslate()===0){
+        //     swiper.allowSlidePrev=false
 
-          }
-        }
-      });
+        //   }
+        // }
+      })
     });
   }
 };

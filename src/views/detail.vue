@@ -18,7 +18,7 @@
         <h3>{{imgtext}}</h3>
         <span class="point tr">”</span>
       </div>
-      <div :class="isOpen?'story_content':'story_content overflow-h'" v-html="storycontent"></div>
+      <div :class="['story_content',isOpen?'':'overflow-h']" v-html="storycontent"></div>
       <div class="close_collapse_btn" @click="handleClose()" v-show="!isOpen">
         <p>
           <Icon type="ios-arrow-down" size="40" color="#ccc"></Icon>
@@ -170,13 +170,13 @@ export default {
   color: black;
   .story_topic {
     font-size: 16px;
-    padding: 10px 26px;
+    padding: 10px 0;
     background: white;
     margin-bottom: 10px;
   }
   .story_detail {
     background: white;
-    padding: 0 26px 40px 26px;
+    padding: 0 0 40px 0;
     h2 {
       padding: 20px 0;
       font-size: 24px;
