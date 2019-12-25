@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-     <FootBar></FootBar>
-     
+    <FootBar></FootBar>
     <router-view/>
   </div>
 </template>
 <script>
 import FootBar from './components/FootBar'
+import { login } from './api/testApi'
 export default {
   data () {
     return {
@@ -15,6 +15,11 @@ export default {
   },
   components: {
     FootBar
+  },
+  mounted(){
+    login().then((res)=>{
+      console.log(res);
+    })
   }
 
 }

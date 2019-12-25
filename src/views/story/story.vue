@@ -7,12 +7,12 @@
   </div>
 </template>
 <script>
-import Storybar from "../../components/storybar";
+import Storybar from '@/components/storybar'
 export default {
   components: {
     Storybar
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .component-fade-enter-active,

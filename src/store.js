@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -55,7 +56,6 @@ export default new Vuex.Store({
       }).then(res => {
         console.log(res.data.data.data)
         commit('changeThemeRe', res.data)
-
       })
     },
     async getThemeNewest({

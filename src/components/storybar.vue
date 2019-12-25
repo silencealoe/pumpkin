@@ -1,8 +1,8 @@
 <template>
   <div id="storybar">
     <ul class="storybar">
-      <li><router-link to="/story/recommend" tag="span" activeClass="select">???</router-link></li>
-      <li><router-link to="/story/newest" tag="span" activeClass="select" >?�?�</router-link></li>
+      <li><router-link to="/story/recommend" tag="span" activeClass="select">推荐</router-link></li>
+      <li><router-link to="/story/newest" tag="span" activeClass="select" >最新</router-link></li>
     </ul>
   </div>
 </template>

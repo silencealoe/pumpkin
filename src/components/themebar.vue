@@ -91,9 +91,6 @@ export default {
 
 .themebarlist {
   width: 100%;
-  .swiper-container {
-  }
-
   .themelist {
     // min-width:30px;
     height: 30px;

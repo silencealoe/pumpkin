@@ -15,8 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
- ul{
+ul{
      width: 100%;
      position: fixed;
      left:0;
@@ -24,21 +23,18 @@ export default {
      z-index:100;
      display: flex;
      background:white;
-
  }
- ul li{
+ul li{
     height:45px;
     width:50%;
     text-align: center;
-  
     span{
         display: block;
         font-size: 16px;
     }
-
  }
  li.active{
-       color:#f7644a;
+   color:#f7644a;
  }
 
 </style>
