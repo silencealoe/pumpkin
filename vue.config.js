@@ -1,6 +1,7 @@
 module.exports = {
   
   devServer: {
+    port: '8888',
     proxy: {
       '/api': {
         target: 'https://story.hao.360.cn',
